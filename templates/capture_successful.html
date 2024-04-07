@@ -1,0 +1,19 @@
+<!-- upload_success.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Capture Success</title>
+</head>
+<body>
+    <h2>Capture Success!</h2>
+    <!-- Add any success message or redirect here -->
+    <button onclick="home()">home</button>
+</body>
+<script>
+    function home() {
+        // Redirect to the 'store' URL
+        window.location.href = "{% url 'home' %}";
+    }
+</script>
+</html>

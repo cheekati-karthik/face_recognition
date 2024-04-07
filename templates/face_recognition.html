@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Recognition</title>
+</head>
+<body>
+    <h1>Face Recognition</h1>
+    <img id="video_feed" src="" alt="Video Feed">
+
+    <script type="text/javascript">
+        // Function to update the image source with the captured frames
+        function updateFrame() {
+            var img = document.getElementById("video_feed");
+            img.src = "data:image/jpeg;base64,{{ frame_generator.next|safe }}";
+            setTimeout(updateFrame, 100); // Update every 100 milliseconds
+        }
+        
+        // Start updating frames when the page loads
+        window.onload = function() {
+            updateFrame();
+        };
+    </script>
+</body>
+</html>

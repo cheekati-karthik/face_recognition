@@ -1,0 +1,15 @@
+<button onclick="redirectTo('{% url 'upload_photos' %}')">Add Record</button>
+<button onclick="redirectTo('{% url 'training' %}')">Train Model</button>
+<button onclick="redirectTo('{% url 'face_recognition' %}')">Capture attendance</button>
+
+{% if user.is_authenticated %}
+<button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
+{% else %}
+<button onclick="redirectTo('{% url 'register' %}')">Register</button>
+<button onclick="redirectTo('{% url 'login' %}')">Login</button>
+{% endif %}
+<script>
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
