@@ -1,11 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 class Photo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,default=1)
-    phone_number = models.CharField(max_length=100, default='')
-    address = models.CharField(max_length=100, default='')
-    student_class = models.CharField(max_length=100, default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='')
 
     def __str__(self):

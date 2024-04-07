@@ -9,20 +9,16 @@ import numpy as np
 import face_recognition
 from django.http import StreamingHttpResponse,JsonResponse
 from django.views.decorators import gzip
-from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request,'home.html')
 
-@login_required
+
 def upload_photos(request):
     if request.method == 'POST':
         form = PhotoForm(request.POST, request.FILES)
         if form.is_valid():
             user = request.user
-            phone_number = form.cleaned_data['phone_number']
-            address = form.cleaned_data['address']
-            student_class = form.cleaned_data['student_class']
             images = request.FILES.getlist('images')
 
             # Create folder if it doesn't exist
@@ -35,22 +31,15 @@ def upload_photos(request):
                 with open(image_path, 'wb+') as destination:
                     for chunk in image.chunks():
                         destination.write(chunk)
-                # Check if a photo already exists for this user
-                existing_photo = Photo.objects.filter(user=user).first()
-                if existing_photo:
-                    existing_photo.phone_number = phone_number
-                    existing_photo.address = address
-                    existing_photo.student_class = student_class
-                    existing_photo.image = os.path.join(user.username, image.name)
-                    existing_photo.save()
-                else:
-                    # Create Photo object
-                    Photo.objects.create(user=user, phone_number=phone_number, address=address, student_class=student_class, image=os.path.join(user.username, image.name))
+
+                # Create a new Photo object for each image
+                Photo.objects.create(user=user, image=image_path)
 
             return redirect('success')
     else:
         form = PhotoForm()
     return render(request, 'upload_photos.html', {'form': form})
+    
 
 def upload_success(request):
     return render(request, 'upload_success.html')
