@@ -1,12 +1,26 @@
-<button onclick="redirectTo('{% url 'upload_photos' %}')">Add Record</button>
-<button onclick="redirectTo('{% url 'training' %}')">Train Model</button>
-<button onclick="redirectTo('{% url 'face_recognition' %}')">Capture attendance</button>
+
+
+
 
 {% if user.is_authenticated %}
+{% if is_admin %}
+
+<button onclick="redirectTo('{% url 'training' %}')">Train Model</button>
+<button onclick="redirectTo('{% url 'face_recognition' %}')">Capture attendance</button>
+<button onclick="redirectTo('{% url 'staffattendance' %}')">Attendance</button>
 <button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
+{% else %}
+{% if photo_exist %}
+<button onclick="redirectTo('{% url 'upload_photos' %}')">Add Record</button>
+{% endif %}
+<button onclick="redirectTo('{% url 'details' %}')">Student Details</button>
+<button onclick="redirectTo('{% url 'studentattendance' %}')">Attendance</button>
+<button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
+{% endif %}
 {% else %}
 <button onclick="redirectTo('{% url 'register' %}')">Register</button>
 <button onclick="redirectTo('{% url 'login' %}')">Login</button>
+
 {% endif %}
 <script>
     function redirectTo(url) {

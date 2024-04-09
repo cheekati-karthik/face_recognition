@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from .views import upload_photos, upload_success,home,training,face_recognition_view
+from .views import upload_photos, upload_success,home,training,face_recognition_view,studentattendance,details,staffattendance
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
@@ -24,5 +24,8 @@ urlpatterns = [
     path('upload/', upload_photos, name='upload_photos'),
     path('success/', upload_success, name='success'),
     path('training/',training, name='training'),
+    path('studentattendance/',studentattendance, name='studentattendance'),
+    path('staffattendance/',staffattendance, name='staffattendance'),
+    path('details/',details, name='details'),
     path('face_recognition/', face_recognition_view, name='face_recognition'),
 ]
