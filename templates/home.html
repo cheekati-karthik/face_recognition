@@ -1,29 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Face Recognition Attendance System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url("{% static 'images/background.jpg' %}");/* You can replace this with your own image */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .container {
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
 
+        h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
 
+        button {
+            width: 100%;
+            background-color: #022F3E;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+            font-size: 16px;
+        }
 
-{% if user.is_authenticated %}
-{% if is_admin %}
+        button:hover {
+            background-color: #2F7C8E;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user.is_authenticated %}
+            {% if is_admin %}
+                <h3>Welcome to Admin</h3>
+            {% else %}
+                <h3>Welcome, {{ user.first_name }}</h3>
+            {% endif %}
+        {% else %}
+            <h3>Welcome to Face Recognition Attendance System</h3>
+            <p>Login for better experience</p>
+        {% endif %}
 
-<button onclick="redirectTo('{% url 'training' %}')">Train Model</button>
-<button onclick="redirectTo('{% url 'face_recognition' %}')">Capture attendance</button>
-<button onclick="redirectTo('{% url 'staffattendance' %}')">Attendance</button>
-<button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
-{% else %}
-{% if photo_exist %}
-<button onclick="redirectTo('{% url 'upload_photos' %}')">Add Record</button>
-{% endif %}
-<button onclick="redirectTo('{% url 'details' %}')">Student Details</button>
-<button onclick="redirectTo('{% url 'studentattendance' %}')">Attendance</button>
-<button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
-{% endif %}
-{% else %}
-<button onclick="redirectTo('{% url 'register' %}')">Register</button>
-<button onclick="redirectTo('{% url 'login' %}')">Login</button>
+        {% if user.is_authenticated %}
+            {% if is_admin %}
+                <button onclick="redirectTo('{% url 'training' %}')">Train Model</button>
+                <button onclick="redirectTo('{% url 'face_recognition' %}')">Capture Attendance</button>
+                <button onclick="redirectTo('{% url 'staffattendance' %}')">Attendance</button>
+            {% else %}
+                {% if photo_exist %}
+                    <button onclick="redirectTo('{% url 'upload_photos' %}')">Add Record</button>
+                {% endif %}
+                <button onclick="redirectTo('{% url 'details' %}')">Student Details</button>
+                <button onclick="redirectTo('{% url 'studentattendance' %}')">Attendance</button>
+            {% endif %}
+            <button onclick="redirectTo('{% url 'logout' %}')">Logout</button>
+        {% else %}
+            <button onclick="redirectTo('{% url 'register' %}')">Register</button>
+            <button onclick="redirectTo('{% url 'login' %}')">Login</button>
+        {% endif %}
+    </div>
 
-{% endif %}
-<script>
-    function redirectTo(url) {
-        window.location.href = url;
-    }
-</script>
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
